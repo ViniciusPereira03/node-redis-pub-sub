@@ -1,0 +1,66 @@
+1 Inicialização do Publisher (publisher.js):
+    Um servidor Express é criado e configurado para escutar na porta 3000.
+    Um endpoint POST /pedido é definido para receber pedidos.
+    Quando um pedido é recebido, ele é publicado no canal "pedidos" usando a função queue.publish.
+
+2 Publicação do Pedido (publisher.js):
+    Quando um pedido é feito através do endpoint POST /pedido, ele é enviado ao servidor.
+    O servidor publica esse pedido no canal "pedidos" utilizando a função queue.publish.
+
+3 Inicialização do Subscriber (subscriber.js):
+    Um serviço de inscrição (subscriber) é inicializado para ouvir mensagens no canal "pedidos".
+    Quando uma mensagem é recebida nesse canal, o serviço executa uma função de retorno (callback) para processar o pedido.
+
+4 - Recebimento do Pedido (subscriber.js):
+    Quando o serviço de inscrição (subscriber) detecta uma nova mensagem no canal "pedidos", ele executa a função de callback.
+    Neste exemplo, a função de callback simplesmente imprime os detalhes do pedido recebido no console.
+
+5 - Feedback Visual no Terminal:
+    No terminal do Publisher, você verá uma mensagem indicando que o servidor está rodando na porta 3000, e a mensagem "Enviando mensagem..." quando um pedido é publicado.
+    No terminal do Subscriber, você verá a mensagem "Subscriber rodando...", seguida por "Recebendo mensagem..." quando um pedido é recebido, juntamente com os detalhes do pedido.
+
+
+
+========
+
+
+O Redis é um banco de dados em memória que suporta diversos tipos de estruturas de dados, mas é especialmente conhecido por sua capacidade de atuar como um sistema de mensagens e armazenamento de dados em cache de alto desempenho. No contexto de pub/sub, o Redis atua como um intermediário de mensagens entre diferentes partes de um sistema distribuído.
+
+Aqui estão os principais papéis desempenhados pelo Redis neste cenário:
+
+Canais de Comunicação:
+
+No Redis, os canais são usados para categorizar mensagens. 
+Quando um cliente publica uma mensagem em um canal específico, todos os clientes que estão inscritos nesse canal recebem essa mensagem. 
+Isso permite uma comunicação eficiente e direcionada entre os diferentes componentes do sistema.
+
+Publicação de Mensagens:
+O Redis fornece um mecanismo eficiente para publicar mensagens em canais específicos. 
+Isso é feito usando a função PUBLISH, que permite que os clientes enviem mensagens para um canal identificado por uma chave única.
+
+Subscrição de Mensagens:
+Os clientes podem se inscrever em canais específicos para receber mensagens que são publicadas nesses canais. 
+O Redis mantém uma lista de todos os clientes inscritos em cada canal e envia as mensagens apropriadas para esses clientes assim que são publicadas.
+
+Arquitetura Assíncrona e Desacoplada:
+A arquitetura pub/sub do Redis permite que os diferentes componentes de um sistema se comuniquem de forma assíncrona e desacoplada. 
+Isso significa que os componentes podem operar de forma independente uns dos outros, sem a necessidade de conhecimento direto sobre a existência ou funcionamento de outros componentes.
+
+Escalabilidade e Confiabilidade:
+O Redis é altamente escalável e confiável, o que o torna adequado para sistemas distribuídos em grande escala. 
+Ele pode lidar com grandes volumes de mensagens e clientes simultâneos de forma eficiente, garantindo a integridade e a consistência dos dados.
+
+Em resumo, o Redis desempenha um papel fundamental na facilitação da comunicação assíncrona e desacoplada entre os diferentes componentes de um sistema distribuído, permitindo uma arquitetura flexível, escalável e confiável. 
+Ele é uma escolha popular para implementar sistemas de pub/sub devido à sua eficiência, desempenho e capacidade de armazenamento em memória.
+
+=======
+
+No código, a subscrição em um canal específico ocorre na função subscribe definida em queue.js. 
+Esta função recebe dois parâmetros: o nome do canal a ser inscrito (channelSubscribe) e uma função de callback (callback). 
+Dentro desta função subscribe, você chama client.subscribe(channelSubscribe) para inscrever o cliente Redis no canal especificado.
+
+Portanto, quando você chama queue.subscribe('pedidos', callback) no arquivo subscriber.js, você está efetivamente instruindo o cliente Redis a se inscrever no canal "pedidos".
+
+Agora, quanto à lista de clientes inscritos em cada canal, o Redis não fornece uma maneira direta de consultar essa lista. 
+Ele gerencia internamente quais clientes estão inscritos em quais canais, mas não expõe essa informação diretamente através de comandos Redis. 
+No entanto, você pode usar algumas técnicas para acompanhar os clientes inscritos, como manter uma lista separada em seu próprio sistema ou usar ferramentas de monitoramento e análise para acompanhar a atividade do Redis.
