@@ -24,15 +24,23 @@ Siga as instruções abaixo para executar o projeto em seu ambiente local:
 
 1. Certifique-se de ter o Redis instalado e em execução em sua máquina. Você pode baixar o Redis em [redis.io/download](https://redis.io/download).
 
-2. Clone este repositório para o seu ambiente local.
+2. Clone este repositório para o seu ambiente local:
+    ```bash
+    git clone https://github.com/ViniciusPereira03/node-redis-pub-sub.git
+    ```
 
-3. Instale as dependências do projeto usando npm:
+3. Navegue até o diretório do projeto:
+    ```bash
+    cd node-redis-pub-sub
+    ```
+
+4. Instale as dependências do projeto usando npm:
 
     ```bash
     npm install
     ```
 
-4. Inicie o publisher e o subscriber em terminais separados usando o seguinte comando:
+5. Inicie o publisher e o subscriber em terminais separados usando o seguinte comando:
 
     ```bash
     node publisher.js
@@ -42,5 +50,5 @@ Siga as instruções abaixo para executar o projeto em seu ambiente local:
     node subscriber.js
     ```
 
-5. Agora, você pode fazer solicitações POST para o endpoint `/pedido` no publisher para enviar pedidos (ou mensagens). Os detalhes dos pedidos serão exibidos no terminal do subscriber assim que forem recebidos.
+6. Agora, você pode fazer solicitações POST para o endpoint `/pedido` no publisher para enviar pedidos (ou mensagens). Os detalhes dos pedidos serão exibidos no terminal do subscriber assim que forem recebidos.
 
